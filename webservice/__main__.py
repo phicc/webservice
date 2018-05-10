@@ -24,8 +24,8 @@ async def pull_request_closed_event(event, gh, *args, **kwargs):
     """
     Whenever pull request is closed, say thanks
     """
-    url = event.data["issue"]["comments_url"]
-    author = event.data["issue"]["user"]["login"]
+    url = event.data["pull_request"]["comments_url"]
+    author = event.data["pull_request"]["user"]["login"]
 
     message = f"Thanks for the merge @{author}! (I'm a bot)."
     await gh.post(url, data={"body": message})
