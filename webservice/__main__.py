@@ -36,7 +36,7 @@ async def pull_request_closed_event(event, gh, *args, **kwargs):
     """
     Whenever pull request is merged, say thanks
     """
-    url = event.data["issue"]["comments_url"] + '/reactions'
+    url = event.data["comment"]["url"] + '/reactions'
     author = event.data["issue"]["user"]["login"]
 
     message = f"Thanks for the merge @{author}! (I'm a bot)."
