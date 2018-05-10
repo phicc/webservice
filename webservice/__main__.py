@@ -31,6 +31,18 @@ async def pull_request_closed_event(event, gh, *args, **kwargs):
     if event.data["pull_request"]["merged"]:
         await gh.post(url, data={"body": message})
 
+@router.register("issue_comment", action="created")
+async def pull_request_closed_event(event, gh, *args, **kwargs):
+    """
+    Whenever pull request is merged, say thanks
+    """
+    url = event.data["issue"]["comments_url"]
+    author = event.data["issue"]["user"]["login"]
+
+    message = f"Thanks for the merge @{author}! (I'm a bot)."
+    if event.data["issue"]["merged"]:
+        await gh.post(url, data={'content': '1'}, accept='application/vnd.github.squirrel-girl-preview+json')
+
 async def main(request):
     body = await request.read()
 
